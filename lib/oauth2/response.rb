@@ -53,7 +53,7 @@ module OAuth2
       # a reserved word. Use adapter as a proxy for new features.
       :json  => lambda{ |body| MultiJson.respond_to?(:adapter) ? MultiJson.load(body) : MultiJson.decode(body) rescue body },
       :query => lambda{ |body| Rack::Utils.parse_query(body) },
-      :text  => lambda{ |body| body }
+      :text  => lambda{ |body| Rack::Utils.parse_nested_query(body) }
     }
 
     # Content type assignments for various potential HTTP content types.
